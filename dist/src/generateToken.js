@@ -7,12 +7,14 @@ exports.generateToken = generateToken;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const neverthrow_1 = require("neverthrow");
 const utils_1 = require("./utils");
+const validations_1 = require("./validations");
 const DEFAULT_SECRET = 'default_secret';
 const DEFAULT_EXPIRES_IN = '1h';
 class GenerateTokenError extends utils_1.MainError {
     constructor(props) {
         super(props);
         this.type = 'GenerateTokenError';
+        this.name = 'GenerateTokenError';
     }
 }
 /**
@@ -24,16 +26,11 @@ class GenerateTokenError extends utils_1.MainError {
  */
 function generateToken(payload, secret = DEFAULT_SECRET, expiresIn = DEFAULT_EXPIRES_IN) {
     try {
-        if (typeof payload === 'object' && Object.keys(payload).length === 0) {
-            return (0, neverthrow_1.err)(new GenerateTokenError({ message: 'Payload is required' }));
+        const paramsOrError = (0, utils_1.createInstanceOrError)(validations_1.creaTokenSchema, { payload, secret, expiresIn });
+        if (paramsOrError.isErr()) {
+            return (0, neverthrow_1.err)(new GenerateTokenError({ message: paramsOrError.error }));
         }
-        if (!secret) {
-            return (0, neverthrow_1.err)(new GenerateTokenError({ message: 'Secret is required' }));
-        }
-        if (!expiresIn) {
-            return (0, neverthrow_1.err)(new GenerateTokenError({ message: 'ExpiresIn is required' }));
-        }
-        return (0, neverthrow_1.ok)(jsonwebtoken_1.default.sign(payload, secret, { expiresIn: expiresIn }));
+        return (0, neverthrow_1.ok)(jsonwebtoken_1.default.sign(paramsOrError.value.payload, paramsOrError.value.secret, { expiresIn: paramsOrError.value.expiresIn }));
     }
     catch (error) {
         return (0, neverthrow_1.err)(new utils_1.UnexpectedError(error));

@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken'
 import { GenericObject } from './types'
 import type { StringValue } from "ms";
 import { err, ok, Result } from 'neverthrow';
-import { ErrorProps, MainError, UnexpectedError } from './utils';
+import { createInstanceOrError, ErrorProps, MainError, UnexpectedError } from './utils';
+import { CreateTokenRequest, creaTokenSchema } from './validations';
 
 const DEFAULT_SECRET = 'default_secret'
 const DEFAULT_EXPIRES_IN = '1h'
@@ -11,6 +12,7 @@ class GenerateTokenError extends MainError {
     constructor(props: ErrorProps) {
         super(props);
         this.type = 'GenerateTokenError';
+        this.name = 'GenerateTokenError';
     }
 }
 
@@ -24,21 +26,16 @@ type GenerateTokenResponse = Result<string, GenerateTokenError | UnexpectedError
  * @returns The generated token or an error
  */
 export function generateToken(
-    payload: GenericObject | string,
+    payload: GenericObject | string | Array<any>,
     secret: string = DEFAULT_SECRET,
     expiresIn: string = DEFAULT_EXPIRES_IN
 ): GenerateTokenResponse {
     try {
-        if (typeof payload === 'object' && Object.keys(payload).length === 0) {
-            return err(new GenerateTokenError({ message: 'Payload is required' }))
+        const paramsOrError = createInstanceOrError<CreateTokenRequest>(creaTokenSchema, { payload, secret, expiresIn })
+        if(paramsOrError.isErr()) {
+            return err(new GenerateTokenError({ message: paramsOrError.error }))
         }
-        if (!secret) {
-            return err(new GenerateTokenError({ message: 'Secret is required' }))
-        }
-        if (!expiresIn) {
-            return err(new GenerateTokenError({ message: 'ExpiresIn is required' }))
-        }
-        return ok(jwt.sign(payload, secret, { expiresIn: expiresIn as StringValue }))
+        return ok(jwt.sign(paramsOrError.value.payload, paramsOrError.value.secret!, { expiresIn: paramsOrError.value.expiresIn as StringValue }))
     } catch (error) {
         return err(new UnexpectedError(error))
     }

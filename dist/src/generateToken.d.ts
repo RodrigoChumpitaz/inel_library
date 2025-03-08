@@ -12,5 +12,5 @@ type GenerateTokenResponse = Result<string, GenerateTokenError | UnexpectedError
  * @param expiresIn - The expiration time of the token
  * @returns The generated token or an error
  */
-export declare function generateToken(payload: GenericObject | string, secret?: string, expiresIn?: string): GenerateTokenResponse;
+export declare function generateToken(payload: GenericObject | string | Array<any>, secret?: string, expiresIn?: string): GenerateTokenResponse;
 export {};

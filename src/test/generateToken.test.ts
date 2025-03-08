@@ -27,5 +27,6 @@ describe('Generate Token', () => {
     it('Should return an error if the payload is empty', () => {
         const token = generateToken({})
         expect(token.isErr()).toBe(true);
+        expect((token as any).error.name).toBe('GenerateTokenError');
     })
 })
