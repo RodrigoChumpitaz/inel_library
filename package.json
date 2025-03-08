@@ -1,0 +1,16 @@
+{
+  "name": "@inel/auth_library",
+  "version": "1.0.0",
+  "main": "dist/src/index.js",
+  "author": "Rodrigo Chumpitaz",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "start": "node dist/src/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
