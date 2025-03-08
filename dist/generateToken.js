@@ -25,7 +25,6 @@ class GenerateTokenError extends utils_1.MainError {
 function generateToken(payload, secret = DEFAULT_SECRET, expiresIn = DEFAULT_EXPIRES_IN) {
     try {
         if (typeof payload === 'object' && Object.keys(payload).length === 0) {
-            console.log('Payload is empty', payload);
             return (0, neverthrow_1.err)(new GenerateTokenError({ message: 'Payload is required' }));
         }
         if (!secret) {

@@ -30,7 +30,6 @@ export function generateToken(
 ): GenerateTokenResponse {
     try {
         if (typeof payload === 'object' && Object.keys(payload).length === 0) {
-            console.log('Payload is empty', payload)
             return err(new GenerateTokenError({ message: 'Payload is required' }))
         }
         if (!secret) {
