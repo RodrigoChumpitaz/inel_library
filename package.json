@@ -1,5 +1,5 @@
 {
-  "name": "@inel/auth_library",
+  "name": "inel_auth_library",
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "author": "Rodrigo Chumpitaz",
