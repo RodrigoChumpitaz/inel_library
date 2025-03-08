@@ -1,6 +1,6 @@
 {
   "name": "inel_auth_library",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "dist/src/index.js",
   "author": "Rodrigo Chumpitaz",
   "license": "MIT",
@@ -9,11 +9,13 @@
     "start": "node dist/src/index.js"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "neverthrow": "^8.2.0"
   }
 }
