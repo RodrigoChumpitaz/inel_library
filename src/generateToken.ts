@@ -35,7 +35,7 @@ export function generateToken(
         if(paramsOrError.isErr()) {
             return err(new GenerateTokenError({ message: paramsOrError.error }))
         }
-        return ok(jwt.sign(paramsOrError.value.payload, paramsOrError.value.secret!, { expiresIn: paramsOrError.value.expiresIn as StringValue }))
+        return ok(jwt.sign(paramsOrError.value.payload, paramsOrError.value.secret!, { expiresIn: paramsOrError.value.expiresIn as StringValue, algorithm: 'HS256' }))
     } catch (error) {
         return err(new UnexpectedError(error))
     }
