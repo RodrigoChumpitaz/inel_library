@@ -1,4 +1,4 @@
-import { GenericObject, StatusCode } from "./types";
+import { StatusCode } from "./types";
 import { NextFunction, Request, Response } from 'express';
 import { response } from "./utils";
 import jwt from 'jsonwebtoken';
@@ -6,7 +6,11 @@ import jwt from 'jsonwebtoken';
 export interface UserPayload {
     userId: string;
     email: string
-    roles: GenericObject[]
+    roles: Array<{
+        name: string;
+        description: string;
+        permissions: Array<string>;
+    }>,
     status: string;
 }
 
