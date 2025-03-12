@@ -1,6 +1,6 @@
 {
   "name": "inel_auth_library",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "main": "dist/src/index.js",
   "author": "Rodrigo Chumpitaz",
   "license": "MIT",
