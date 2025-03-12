@@ -1,8 +1,11 @@
-import { GenericObject } from "./types";
 export interface UserPayload {
     userId: string;
     email: string;
-    roles: GenericObject[];
+    roles: Array<{
+        name: string;
+        description: string;
+        permissions: Array<string>;
+    }>;
     status: string;
 }
 declare global {
