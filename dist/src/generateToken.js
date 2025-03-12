@@ -30,7 +30,7 @@ function generateToken(payload, secret = DEFAULT_SECRET, expiresIn = DEFAULT_EXP
         if (paramsOrError.isErr()) {
             return (0, neverthrow_1.err)(new GenerateTokenError({ message: paramsOrError.error }));
         }
-        return (0, neverthrow_1.ok)(jsonwebtoken_1.default.sign(paramsOrError.value.payload, paramsOrError.value.secret, { expiresIn: paramsOrError.value.expiresIn }));
+        return (0, neverthrow_1.ok)(jsonwebtoken_1.default.sign(paramsOrError.value.payload, paramsOrError.value.secret, { expiresIn: paramsOrError.value.expiresIn, algorithm: 'HS256' }));
     }
     catch (error) {
         return (0, neverthrow_1.err)(new utils_1.UnexpectedError(error));
