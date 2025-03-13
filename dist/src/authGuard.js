@@ -11,13 +11,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
  * AuthGuard decorator
  * @param accessTokenSecret - The secret to sign the token
  * @returns The generated token or an error
- * @example
- * ```ts
- * @AuthGuard ({ accessToken })
- * async function get(req: Request, res: Response) {
- *  return res.json({ message: 'Hello World!' });
- * }
- * ```
  */
 function AuthGuard({ accessTokenSecret }) {
     return function (_target, _propertyKey, descriptor) {
@@ -35,9 +28,9 @@ function AuthGuard({ accessTokenSecret }) {
             }
             catch (error) {
                 if (error instanceof jsonwebtoken_1.default.TokenExpiredError) {
-                    return (0, utils_1.response)(res, 'Access Token has expired.', types_1.StatusCode.UNAUTHORIZED, 'UnauthorizedError');
+                    return (0, utils_1.response)(res, 'Access Token has expired.', types_1.StatusCode.UNAUTHORIZED, 'ExpiredTokenError');
                 }
-                return (0, utils_1.response)(res, 'Invalid Access Token.', types_1.StatusCode.FORBIDDEN, 'UnauthorizedError');
+                return (0, utils_1.response)(res, 'Invalid Access Token.', types_1.StatusCode.FORBIDDEN, 'ForbiddenError');
             }
         };
         return descriptor;

@@ -17,3 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./utils"), exports);
 __exportStar(require("./generateToken"), exports);
 __exportStar(require("./authGuard"), exports);
+__exportStar(require("./decodeTokenData"), exports);
